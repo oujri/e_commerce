@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+{% load static %}
+{% load humanize %}
+<html lang="en">
+<head>
+    <!-- Basic page needs ============================================ -->
+    <title>BestShop - Multipurpose Responsive HTML5 Template</title>
+    <meta charset="utf-8">
+    <meta name="keywords" content="html5 template, best html5 template, best html template, html5 basic template, multipurpose html5 template, multipurpose html template, creative html templates, creative html5 templates" />
+    <meta name="description" content="BestShop is a powerful Multi-purpose HTML5 Template with clean and user friendly design. It is definite a great starter for any eCommerce web project." />
+    <meta name="author" content="Magentech">
+    <meta name="robots" content="index, follow" />
+
+    <!-- Mobile specific metas ============================================ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Libs CSS ============================================ -->
+    <link href="{% static 'ecommerce/css/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/js/datetimepicker/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/js/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/themecss/lib.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/js/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/js/minicolors/miniColors.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS ============================================ -->
+    <link href="{% static 'ecommerce/css/themecss/so_searchpro.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/themecss/so_megamenu.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/themecss/so-categories.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/themecss/so-listing-tabs.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/themecss/so-newletter-popup.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/footer/footer4.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/header/header4.css' %}" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/theme.css' %}" id="color_scheme" rel="stylesheet">
+    <link href="{% static 'ecommerce/css/responsive.css' %}" rel="stylesheet">
+
+     <!-- Google web fonts ============================================ -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+         body{font-family:'Roboto', sans-serif}
+    </style>
+</head>
+
+<body class="res layout-subpage">
+    <div id="wrapper" class="wrapper-full ">
+        <div class="main-container container">
+            {% if message_success %}
+            <div id="success" class="alert alert-success" role="alert">
+              <strong>Well done!</strong> {{ message_success }}
+            </div>
+            {% endif %}
+            <div class="row">
+                <div id="content" class="col-sm-12">
+                    <div class="info-contact clearfix">
+                        <div class="col-lg-12 col-sm-12 col-xs-12 contact-form">
+                            <div class="submit-comment module">
+                                <h3 class="modtitle2">
+                                    <span>Contact Supplier</span>
+                                </h3>
+                                <form action="{% url 'e_commerce:contact_supplier' product.pk %}" method="post">
+                                {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-sm-4" style="margin-bottom: 10px">
+                                            <i class="fa fa-user"></i>&nbsp;&nbsp;Supplier : <b>{{ product.supplier.user.last_name }} {{ product.supplier.user.first_name }} </b>
+                                        </div>
+                                        <div class="col-sm-4" style="margin-bottom: 10px">
+                                            <i class="fa fa-envelope"></i>&nbsp;&nbsp; <b>{{ product.supplier.user.email }} </b>
+                                        </div>
+                                        <div class="col-sm-4" style="margin-bottom: 10px">
+                                            <i class="fa fa-phone"></i>&nbsp;&nbsp; <b>{{ product.supplier.tel }}</b>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <img width="70px" class="" src="{{ product.image.url }}" alt="Image {{ product.name }}" />
+                                        </div>
+                                        <div class="col-sm-2" style="padding-top: 12px">
+                                            <b>{{ product.name }}</b>
+                                        </div>
+                                        <div class="col-sm-4" style="padding-top: 12px">
+                                            <input type="number" width="60px" size="7" class="form-control" value="1" placeholder="Quantity" name="quantity">
+                                        </div>
+                                        <div class="col-sm-2" style="padding-top: 17px">/ {{ product.unit }}
+                                        </div>
+                                        <div class="col-sm-12 textarea">
+                                            <textarea class="form-control" rows="7" id="comment" placeholder="Your Message..." required="required" name="message"></textarea>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {% if user.is_authenticated %}
+                                                <input type="text" class="form-control" placeholder="Your name" name="name" required="required" value="{{ user.last_name|add:' ' }}{{ user.first_name }}">
+                                            {% else %}
+                                                <input type="text" class="form-control" placeholder="Your name" name="name" required="required">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" placeholder="Your mail" name="email" required="required" value="{{ user.email }}">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" placeholder="Your phone" name="tel" value="{{ user.profil.tel }}">
+                                        </div>
+                                        <div class="col-sm-12" style="margin-top: 20px">
+                                            <button type="submit" class="btn btn-group">Send Message</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+        </div>
+        <style type="text/css">
+            #wrapper{box-shadow:none;}
+            #wrapper > *:not(.main-container){display: none;}
+            #content{margin:0}
+            .container{width:100%;}
+
+            .product-info .product-view,.left-content-product,.box-info-product{margin:0;}
+            .left-content-product .content-product-right .box-info-product .cart input{padding:12px 16px;}
+
+            .left-content-product .content-product-right .box-info-product .add-to-links{ width: auto;  float: none; margin-top: 0px; clear:none; }
+            .add-to-links ul li{margin:0;}
+        </style>
+    </div>
+    <script type="text/javascript" src="{% static 'ecommerce/js/jquery-2.2.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/owl-carousel/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/themejs/libs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/unveil/jquery.unveil.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/countdown/jquery.countdown.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/dcjqaccordion/jquery.dcjqaccordion.2.8.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/datetimepicker/moment.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/jquery-ui/jquery-ui.min.js' %}"></script>
+    <!-- Theme files
+    ============================================ -->
+    <script type="text/javascript" src="{% static 'ecommerce/js/themejs/homepage.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'ecommerce/js/themejs/so_megamenu.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/themejs/addtocart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ecommerce/js/themejs/application.js' %}"></script>
+</body>
+</html>
